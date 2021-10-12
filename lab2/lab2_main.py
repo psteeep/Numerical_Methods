@@ -1,104 +1,42 @@
-import copy, numpy
+# Importing NumPy Library
+import numpy as np
+import sys
+import jacobi_method
 
-a = numpy.array([[2., 2, 1, 1],
-                 [1, 2, 1, 1],
-                 [0, 1, 1, 2]])
-print(a)
+n = int(input('Enter number of unknowns: '))
 
+a = np.zeros((n, n + 1))
 
-def gaussFunc(a):  # В метод передається масив)
-    eps = 1e-16
+x = np.zeros(n)
 
-    c = numpy.array(a)
-    a = numpy.array(a)  # свторюємо копію масива а
+print('Enter Augmented Matrix Coefficients:')
+for i in range(n):
+    for j in range(n + 1):
+        a[i][j] = float(input('a[' + str(i) + '][' + str(j) + ']='))
 
-    len1 = len(a[:, 0])  # розмір матриці A, тобто n
-    len2 = len(a[0, :])  # n+1
-    # vectB = copy.deepcopy(a[:, len1])#вектор B в Ax=B
+for i in range(n):
+    if a[i][i] == 0.0:
+        sys.exit('Divide by zero detected!')
 
-    for g in range(len1):
+    for j in range(i + 1, n):
+        ratio = a[j][i] / a[i][i]
 
-        max = abs(a[g][g])
-        my = g  # масимум в стовпчику
-        t1 = g  # g
-        while t1 < len1:  # цикл пошуку максимума в стовпчику
-            if abs(a[t1][g]) > max:
-                max = abs(a[t1][g])
-                my = t1
-            t1 += 1
+        for k in range(n + 1):
+            a[j][k] = a[j][k] - ratio * a[i][k]
 
-        if abs(max) < eps:
-            raise DetermExeption("Check determinant")  # визначник матриці дорівнює 0
+x[n - 1] = a[n - 1][n] / a[n - 1][n - 1]
 
-        if my != g:
-            a[g][:], a[my][:] = a[my][:], a[g][:]  # міняємо дану строчку з строчкою, в якій
-            # максимум ( реализация swap())
+for i in range(n - 2, -1, -1):
+    x[i] = a[i][n]
 
-        amain = float(a[g][g])  # коеф перед x
+    for j in range(i + 1, n):
+        x[i] = x[i] - a[i][j] * x[j]
 
-        z = g
-        while z < len2:
-            a[g][z] = a[g][z] / amain  # x стає  1
-            z += 1
-        j = g + 1
+    x[i] = x[i] / a[i][i]
 
-        while j < len1:  # віднімаємо строку, помножену на коефіцієнти
-            b = a[j][g]  # від настпної, получаємо стовпчик нулів.
-            z = g
-            while z < len2:
-                a[j][z] = a[j][z] - a[g][z] * b
-                z += 1
-            j += 1
+print('\nRequired solution by Gauss Elimination Method is: ')
+for i in range(n):
+    print('X%d = %0.2f' % (i, x[i]), end='\t')
 
-    a = backTrace(a, len1)  # звортній хід метода Гаусса
-
-    print("Похибка:")
-    print(vectorN(c, a, len1))
-    return a
-
-
-class DetermExeption(Exception):  # перевірка визначника
-    def __init__(self, value):
-        self.value = value
-
-    def __str__(self):
-        return repr(self.value)
-
-
-def backTrace(a, len1):  # зворотній хід
-    a = numpy.array(a)
-    i = len1 - 1
-    while i > 0:
-        j = i - 1
-        while j >= 0:
-            a[j][len1] = a[j][len1] - a[j][i] * a[i][len1]
-            j -= 1
-        i -= 1
-    return a[:, len1]
-
-
-def vectorN(c, a, len1):
-    c = numpy.array(c)
-    a = numpy.array(a)
-    vectB = copy.deepcopy(c[:, len1])
-    b = numpy.zeros((len1))
-    i = 0
-
-    while i < len1:
-        j = 0
-        while j < len1:
-            b[i] += c[i][j] * a[j]
-            j += 1
-        i = i + 1
-
-    c = copy.deepcopy(b)
-
-    for i in range(len1):
-        c[i] = abs(c[i] - vectB[i])
-
-    return c
-
-
-b = gaussFunc(a)
-print("Відповідь:")
-print(b)
+# X0 = 2.00	X1 = -1.00	X2 = 1.00	X3 = 2.00
+jacobi_method.jacobi_method()
