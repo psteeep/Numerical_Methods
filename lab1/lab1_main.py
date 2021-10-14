@@ -33,7 +33,7 @@ def method_newton(a2, b2):
         while abs(xn1 - xn) > math.pow(10, -5):
             itr += 1
             xn = xn1
-            xn1 = xn - fun(xn) / fun1(xn)
+            xn1 = xn - fun(xn) / fun1(x0)
         print("Result of Newton method is -> ", xn1)
         print("Number of iteration is -> ", itr)
     except ValueError:

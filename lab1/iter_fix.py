@@ -45,9 +45,10 @@ def main():
             xn = g_fun(xp)
             res = xn - xp
             xp = xn
+            print(xp)
         print("Result of Fixed point method is  -> ", xp)
         print("Number of iteration (posteriori ) is ->", itr)
-        print("prior =", (math.log10(abs(fun(x0) - x0) / e) / (math.log10(1) + 1)))
+        print("prior =", int(math.log10(abs(fun(x0) - x0) / e) / (math.log10(1) + 1)+1))
     else:
         print("No solution!")
 
