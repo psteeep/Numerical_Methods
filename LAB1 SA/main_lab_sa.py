@@ -62,15 +62,15 @@ class RecurrentAlgo:
 
 
 def main():
-    k = 5000
-    a1 = 1
-    a2 = 3
-    b = 1
+    k = int(input("Enter k = "))
+    a1 = int(input("Enter a1 = "))
+    a2 = int(input("Enter a2 = "))
+    b = int(input("Enter b ="))
 
-    uk = 1
+    uk = int(input("Enter option:"))
 
-    q = 10
-    t0 = 0.02
+    q = int(input("Enter q = "))
+    t0 = float(input("Enter T0 = "))
 
     rec = RecurrentAlgo(k, a1, a2, b, uk, t0, q)
     X, Y = rec.getXY()
