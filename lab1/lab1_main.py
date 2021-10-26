@@ -2,8 +2,8 @@ import math
 
 e = 10 ** (-4)
 
-a = 3  # range 1
-b = 4  # range 2
+a = 0  # range 1
+b = 2  # range 2
 
 
 def fun(x):
@@ -12,7 +12,8 @@ def fun(x):
     :param x: any argument
     :return: res
     """
-    return math.sinh(x) - 12 * math.tanh(x) - 0.311
+    # return math.sinh(x) - 12 * math.tanh(x) - 0.311
+    return 3 * x - math.cos(x) - 1
 
 
 def fun1(x):
@@ -21,7 +22,8 @@ def fun1(x):
     :param x: any argument
     :return:
     """
-    return math.cosh(x) - 12 * (1 / math.cosh(x) ** 2)
+    # return math.cosh(x) - 12 * (1 / math.cosh(x) ** 2)
+    return 3 - math.sin(x)
 
 
 def method_newton(a2, b2):
@@ -42,6 +44,7 @@ def method_newton(a2, b2):
 
 def main():
     method_newton(a, b)
+    print(fun(0))
 
 
 if __name__ == "__main__":
