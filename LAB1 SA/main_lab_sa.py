@@ -62,6 +62,8 @@ class RecurrentAlgo:
 
 
 def main():
+
+    print("\t\t***** Enter parameters *****\n\n")
     k = int(input("Enter k = "))
     a1 = int(input("Enter a1 = "))
     a2 = int(input("Enter a2 = "))
