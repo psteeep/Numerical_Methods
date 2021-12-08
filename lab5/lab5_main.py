@@ -2,7 +2,7 @@
 
 class Quadrature:
     __sum = 0.0
-    __nseg = 1
+    __nseg = 6
     __ncalls = 0
 
     def __restart(func, x0, x1, nseg0, reset_calls=True):
